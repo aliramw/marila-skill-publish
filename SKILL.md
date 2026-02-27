@@ -303,7 +303,6 @@ clawhub sync
 
 ## 📚 参考资源
 
-- ClawHub 文档：https://clawhub.ai/docs
 - 技能格式规范：https://github.com/openclaw/clawhub/blob/main/docs/skill-format.md
 - 安全规范：https://github.com/openclaw/clawhub/blob/main/docs/security.md
 - ClawHub 技能市场：https://clawhub.ai/skills
