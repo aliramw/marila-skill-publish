@@ -32,12 +32,20 @@ cat ~/.openclaw/workspace/skills/marila-skill-publish/SKILL.md
 ### 发布命令
 
 ```bash
-# 直接发布
+# 先发 GitHub Release（必做）
+gh release create v1.0.0 --title "v1.0.0" --notes "更新说明"
+
+# 再发布到 ClawHub
 clawhub publish . --slug my-skill --version 1.0.0 --changelog "更新说明"
 
-# 使用 sync（推荐）
+# 使用 sync 也一样：GitHub Release 不能省
 clawhub sync
 ```
+
+### 硬规则
+
+- 发布 `~/Skills` 目录下的任何技能时，**每次 ClawHub 发布都必须同步创建一个对应版本的 GitHub Release**
+- 不允许只发技能、不发 release
 
 ### 必需文件
 

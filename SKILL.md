@@ -1,7 +1,7 @@
 ---
 name: marila-skill-publish
 description: 马锐拉的 ClawHub 技能发布流程与经验总结。包含完整的技能发布步骤、元数据规范、常见问题解决方案。
-version: 1.0.2
+version: 1.0.3
 metadata:
   openclaw:
     requires:
@@ -29,6 +29,8 @@ metadata:
 3. **push + GitHub Release** — `git add -A && git commit && git push`，然后 `gh release create v0.x.x --title "v0.x.x" --notes "..."`
 4. **发布到 ClawHub** — `clawhub publish <路径> --slug <名> --version x.x.x --changelog "..."`
 5. **同步到 agent 工作空间** — `cp <~/Skills/技能名/SKILL.md> ~/.openclaw/workspace/skills/技能名/SKILL.md`
+
+**硬规则：** 以后凡是发布 `~/Skills` 里的技能，**每次 ClawHub 发布都必须同步创建对应的 GitHub Release**。不允许只发技能不发 release。
 
 ---
 
@@ -289,10 +291,13 @@ git add -A
 git commit -m "chore: bump version to 1.0.1"
 git push
 
-# 4. 发布新版本
+# 4. 先发 GitHub Release（必做）
+gh release create v1.0.1 --title "v1.0.1" --notes "修复 xxx"
+
+# 5. 再发布新版本到 ClawHub
 clawhub publish . --slug my-skill --version 1.0.1 --changelog "修复 xxx"
 
-# 或使用 sync
+# 或使用 sync（前提：GitHub Release 也要同步创建）
 clawhub sync
 ```
 

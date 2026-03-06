@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.3] - 2026-03-07
+
+### 更新
+- ✅ 新增硬规则：发布 `~/Skills` 下任意技能时，ClawHub 发布必须同步创建 GitHub Release
+- ✅ 版本更新流程补充为：先 push + GitHub Release，再发布到 ClawHub
+
 ## [1.0.2] - 2026-03-05
 
 ### 更新
