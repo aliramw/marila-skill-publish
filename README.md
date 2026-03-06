@@ -1,6 +1,6 @@
 # marila-skill-publish
 
-马锐拉的 ClawHub 技能发布流程与经验总结。
+马锐拉的 ClawHub 技能发布流程与经验总结，专门用于发布和更新 `~/Skills` 里的技能到 ClawHub，并同步 GitHub Release。也覆盖 Git / GitHub CLI 安装、GitHub 鉴权、Git 初始化这些前置步骤。
 
 ## 📖 内容
 
@@ -9,6 +9,8 @@
 ### 涵盖内容
 
 - ✅ 完整的技能发布流程
+- ✅ Git / GitHub CLI 安装说明
+- ✅ GitHub 鉴权与 Git 初始化说明
 - ✅ SKILL.md 元数据规范
 - ✅ 常见问题与解决方案
 - ✅ 版本更新流程

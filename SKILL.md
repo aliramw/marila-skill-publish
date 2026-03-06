@@ -1,13 +1,14 @@
 ---
 name: marila-skill-publish
-description: 马锐拉的 ClawHub 技能发布流程与经验总结。包含完整的技能发布步骤、元数据规范、常见问题解决方案。
-version: 1.0.3
+description: 用于发布和更新 `~/Skills` 里的 OpenClaw 技能到 ClawHub，并同步 GitHub Release。用户提到“发布技能”“发到 ClawHub”“发布这个 skill”“写完就发布”“上线这个技能”等场景时使用。包含完整发布步骤、版本规范、GitHub Release 同步规则和常见问题处理。
+version: 1.0.5
 metadata:
   openclaw:
     requires:
       bins:
         - clawhub
         - git
+        - gh
     homepage: https://github.com/aliramw/dingtalk-ai-table
 ---
 
@@ -20,7 +21,76 @@ metadata:
 - Node.js >= 18
 - `clawhub` CLI (`npm install -g clawhub`)
 - Git
+- GitHub CLI (`gh`)
 - ClawHub 账号（已登录）
+- GitHub 账号（用于 push 和 GitHub Release）
+
+## 🧰 环境检查与补装
+
+先检查命令是否存在：
+
+```bash
+which git
+which gh
+which clawhub
+```
+
+如果缺命令：
+
+```bash
+# macOS（推荐）
+brew install git gh
+npm install -g clawhub
+
+# Ubuntu / Debian
+sudo apt update
+sudo apt install -y git gh
+npm install -g clawhub
+```
+
+验证：
+
+```bash
+git --version
+gh --version
+clawhub --version
+```
+
+## 🔐 GitHub 鉴权与 Git 初始化
+
+如果用户还没登录 GitHub，先做这个：
+
+```bash
+# 登录 GitHub CLI
+gh auth login
+
+# 验证登录状态
+gh auth status
+```
+
+如果用户本机 Git 还没初始化身份，先配置：
+
+```bash
+git config --global user.name "你的名字"
+git config --global user.email "you@example.com"
+```
+
+如果仓库还没绑远程：
+
+```bash
+git remote add origin https://github.com/<user>/<repo>.git
+# 或
+# git remote add origin git@github.com:<user>/<repo>.git
+```
+
+发布前最少确认这 4 件事：
+
+```bash
+git status
+git remote -v
+gh auth status
+clawhub whoami
+```
 
 ## ✅ 发布顺序（必须按此顺序，不能错）
 
@@ -256,7 +326,7 @@ metadata:
 ---
 ```
 
-### 问题 5: 登录失败
+### 问题 5: ClawHub 登录失败
 
 **症状：**
 ```
@@ -274,6 +344,40 @@ clawhub login
 
 # 或手动设置 token
 clawhub auth login
+```
+
+### 问题 6: `gh release create` 或 `git push` 失败
+
+**常见原因：**
+- 没安装 `gh`
+- GitHub CLI 未登录
+- Git 没配置 `user.name` / `user.email`
+- 仓库没配置 `origin`
+- 当前账号对仓库无 push 权限
+
+**排查顺序：**
+```bash
+which gh
+gh auth status
+git config --global --get user.name
+git config --global --get user.email
+git remote -v
+```
+
+**解决：**
+```bash
+# 安装 gh
+brew install gh
+
+# 登录 GitHub
+gh auth login
+
+# 配置 Git 身份
+git config --global user.name "你的名字"
+git config --global user.email "you@example.com"
+
+# 补 remote
+git remote add origin https://github.com/<user>/<repo>.git
 ```
 
 ## 📝 版本更新流程
