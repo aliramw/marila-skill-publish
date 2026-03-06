@@ -1,6 +1,6 @@
 # ClawHub 过审 Checklist
 
-发布任何 `~/Skills` 下的技能前，先逐项自查。目标不是“差不多”，而是**元数据、文档、实现三层完全一致**。
+发布任何 OpenClaw 技能前，先逐项自查。目标不是“差不多”，而是**元数据、文档、实现三层完全一致**。
 
 ## 1. 元数据一致性
 
@@ -114,12 +114,24 @@
 
 如果改了安全逻辑，必须跑测试，不要只改文档。
 
-## 10. 发版前最后一轮 grep
+## 10. 安全审查补充
+
+重点新增这几类自查：
+
+- description 不得包含机器本地目录路径（如 `~/Skills`、`~/.openclaw/workspace`）
+- 不得推荐 TLS / 证书校验绕过命令（如 `NODE_TLS_REJECT_UNAUTHORIZED=0`）
+- 不得把读取本地凭证文件内容作为常规排障步骤（如直接 `cat` token 文件）
+- 对 agent 工作区或其他敏感目录的写操作，必须明确标注为受信任环境下的显式操作
+
+## 11. 发版前最后一轮 grep
 
 重点搜这些高风险词：
 
 - `~/workspace`
+- `~/Skills`
 - `UUID v4`
+- `NODE_TLS_REJECT_UNAUTHORIZED=0`
+- `config.json`
 - 旧版本号
 - 未声明的 env 名
 - 未声明的 CLI 名

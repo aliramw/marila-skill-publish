@@ -1,7 +1,7 @@
 ---
 name: marila-skill-publish
-description: 用于发布和更新 `~/Skills` 里的 OpenClaw 技能到 ClawHub，并同步 GitHub Release。用户提到“发布技能”“发到 ClawHub”“发布这个 skill”“写完就发布”“上线这个技能”等场景时使用。包含完整发布步骤、版本规范、GitHub Release 同步规则和常见问题处理。
-version: 1.0.6
+description: 用于发布和更新 OpenClaw 技能到 ClawHub，并同步 GitHub Release。用户提到“发布技能”“发到 ClawHub”“发布这个 skill”“写完就发布”“上线这个技能”等场景时使用。包含完整发布步骤、版本规范、发布前检查清单、GitHub Release 同步规则和常见问题处理。
+version: 1.0.7
 metadata:
   openclaw:
     requires:
@@ -101,11 +101,13 @@ clawhub whoami
 3. **先过一遍 checklist** — 特别检查 `requires.bins` / `requires.env` / `primaryEnv` / 本地文件行为说明
 4. **push + GitHub Release** — `git add -A && git commit && git push`，然后 `gh release create v0.x.x --title "v0.x.x" --notes "..."`
 5. **发布到 ClawHub** — `clawhub publish <路径> --slug <名> --version x.x.x --changelog "..."`
-6. **同步到 agent 工作空间** — `cp <~/Skills/技能名/SKILL.md> ~/.openclaw/workspace/skills/技能名/SKILL.md`
+6. **如需立即让当前 agent 使用最新技能定义，再手动同步到 agent 工作空间** — `cp <技能目录>/SKILL.md ~/.openclaw/workspace/skills/技能名/SKILL.md`
 
-**硬规则：** 以后凡是发布 `~/Skills` 里的技能，**每次 ClawHub 发布都必须同步创建对应的 GitHub Release**。不允许只发技能不发 release。
+**硬规则：** 以后凡是发布 OpenClaw 技能，**每次 ClawHub 发布都必须同步创建对应的 GitHub Release**。不允许只发技能不发 release。
 
 **新增硬规则：** 发布前必须过一遍 `references/clawhub-review-checklist.md`。尤其是带脚本、凭证、工作区文件读写的技能，不检查就发，极容易被 ClawHub 审核打回。
+
+**敏感操作提示：** 同步到 `~/.openclaw/workspace/skills` 属于对 agent 工作区的写操作，只应在受信任环境中显式执行，不应在公共或不受信任场景下默认执行。
 
 ---
 
@@ -255,15 +257,16 @@ open https://clawhub.ai/username/my-skill
 Error: fetch failed
 ```
 
-**原因：** SSL 证书验证失败或网络问题
+**原因：** 网络问题、服务端暂时不可达或本机登录状态异常
 
 **解决：**
 ```bash
-# 临时方案
-export NODE_TLS_REJECT_UNAUTHORIZED=0
-
-# 或检查网络连接
+# 检查网络连接
 curl -I https://clawhub.ai
+
+# 重新登录
+clawhub login
+clawhub whoami
 ```
 
 ### 问题 2: `SKILL.md required` 错误
@@ -341,14 +344,11 @@ metadata:
 
 **解决：**
 ```bash
-# 检查 token 文件
-cat ~/.clawhub/config.json
-
 # 重新登录
 clawhub login
+clawhub whoami
 
-# 或手动设置 token
-clawhub auth login
+# 如仍失败，在受信任环境中人工检查本机 ClawHub 登录状态
 ```
 
 ### 问题 6: `gh release create` 或 `git push` 失败

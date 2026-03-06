@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.0.7] - 2026-03-07
+
+### 修复
+- ✅ description 去掉本地目录路径表述，避免把技能用途绑死到特定机器路径
+- ✅ 删除 TLS bypass 和直接读取本地凭证文件的排障建议
+- ✅ 将 agent workspace 同步改为受信任环境下的显式敏感操作说明
+- ✅ checklist 新增安全审查项：本地目录路径、TLS 绕过、凭证文件读取、敏感写操作标注
+
 ## [1.0.6] - 2026-03-07
 
 ### 更新
@@ -22,7 +30,7 @@
 ## [1.0.3] - 2026-03-07
 
 ### 更新
-- ✅ 新增硬规则：发布 `~/Skills` 下任意技能时，ClawHub 发布必须同步创建 GitHub Release
+- ✅ 新增硬规则：发布 OpenClaw 技能时，ClawHub 发布必须同步创建 GitHub Release
 - ✅ 版本更新流程补充为：先 push + GitHub Release，再发布到 ClawHub
 
 ## [1.0.2] - 2026-03-05
