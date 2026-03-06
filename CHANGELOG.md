@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.0.6] - 2026-03-07
+
+### 更新
+- ✅ 将 `references/clawhub-review-checklist.md` 正式纳入发布流程
+- ✅ SKILL.md 和 README.md 明确要求：发布前必须先过 checklist
+
 ## [1.0.5] - 2026-03-07
 
 ### 更新

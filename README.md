@@ -48,6 +48,7 @@ clawhub sync
 
 - 发布 `~/Skills` 目录下的任何技能时，**每次 ClawHub 发布都必须同步创建一个对应版本的 GitHub Release**
 - 不允许只发技能、不发 release
+- 发布前必须先检查 `references/clawhub-review-checklist.md`
 
 ### 必需文件
 
@@ -69,6 +70,8 @@ metadata:
 ```
 
 ## 🔗 相关资源
+
+- [ClawHub 过审 Checklist](references/clawhub-review-checklist.md)
 
 - [ClawHub 技能市场](https://clawhub.ai/skills)
 - [dingtalk-ai-table 技能](https://clawhub.ai/aliramw/dingtalk-ai-table)

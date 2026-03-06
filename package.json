@@ -1,6 +1,6 @@
 {
   "name": "marila-skill-publish",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "发布和更新 ~/Skills 里的 OpenClaw 技能到 ClawHub，并同步 GitHub Release、Git 安装、GitHub 鉴权的流程与规范",
   "keywords": [
     "clawhub",

@@ -1,7 +1,7 @@
 ---
 name: marila-skill-publish
 description: 用于发布和更新 `~/Skills` 里的 OpenClaw 技能到 ClawHub，并同步 GitHub Release。用户提到“发布技能”“发到 ClawHub”“发布这个 skill”“写完就发布”“上线这个技能”等场景时使用。包含完整发布步骤、版本规范、GitHub Release 同步规则和常见问题处理。
-version: 1.0.5
+version: 1.0.6
 metadata:
   openclaw:
     requires:
@@ -94,13 +94,18 @@ clawhub whoami
 
 ## ✅ 发布顺序（必须按此顺序，不能错）
 
+发布前，**先检查** `references/clawhub-review-checklist.md`，确认元数据、README、脚本行为、凭证声明和示例参数已经一致。
+
 1. **确定版本号** — 同步修改 `SKILL.md` 和 `package.json` 的 version 字段
 2. **更新 CHANGELOG.md** — 在顶部追加新版本记录
-3. **push + GitHub Release** — `git add -A && git commit && git push`，然后 `gh release create v0.x.x --title "v0.x.x" --notes "..."`
-4. **发布到 ClawHub** — `clawhub publish <路径> --slug <名> --version x.x.x --changelog "..."`
-5. **同步到 agent 工作空间** — `cp <~/Skills/技能名/SKILL.md> ~/.openclaw/workspace/skills/技能名/SKILL.md`
+3. **先过一遍 checklist** — 特别检查 `requires.bins` / `requires.env` / `primaryEnv` / 本地文件行为说明
+4. **push + GitHub Release** — `git add -A && git commit && git push`，然后 `gh release create v0.x.x --title "v0.x.x" --notes "..."`
+5. **发布到 ClawHub** — `clawhub publish <路径> --slug <名> --version x.x.x --changelog "..."`
+6. **同步到 agent 工作空间** — `cp <~/Skills/技能名/SKILL.md> ~/.openclaw/workspace/skills/技能名/SKILL.md`
 
 **硬规则：** 以后凡是发布 `~/Skills` 里的技能，**每次 ClawHub 发布都必须同步创建对应的 GitHub Release**。不允许只发技能不发 release。
+
+**新增硬规则：** 发布前必须过一遍 `references/clawhub-review-checklist.md`。尤其是带脚本、凭证、工作区文件读写的技能，不检查就发，极容易被 ClawHub 审核打回。
 
 ---
 
